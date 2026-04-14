@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "prisma.prisma",
+    "bradlc.vscode-tailwindcss",
+    "christian-kohler.npm-intellisense",
+    "formulahendry.auto-rename-tag",
+    "christian-kohler.npm-intellisense"
+  ]
+}

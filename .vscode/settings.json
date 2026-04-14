@@ -1,0 +1,20 @@
+{
+  "material-icon-theme.activeIconPack": "nest",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.turbo": true
+  }
+}

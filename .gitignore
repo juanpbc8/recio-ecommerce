@@ -1,0 +1,39 @@
+# --- GENERAL ---
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+.turbo
+dist/
+build/
+coverage/
+
+# --- ENV ---
+.env
+.env.*
+!.env.example
+
+# --- NEXT.JS ---
+.next/
+out/
+next-env.d.ts
+.vercel
+
+# --- NESTJS ---
+/apps/api/dist/
+/apps/api/build/
+
+# --- ANGULAR ---
+.angular/
+/apps/admin-panel/dist/
+
+
+# --- PRISMA & DATABASE ---
+# Ignoramos el cliente generado si lo sacaste de node_modules
+packages/database/generated/
+# Si usas SQLite para pruebas locales:
+*.db
+*.db-journal
+
+# --- TYPESCRIPT ---
+*.tsbuildinfo

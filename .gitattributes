@@ -1,0 +1,9 @@
+# Forzar normalización automática para todos los archivos de texto
+* text=auto
+
+# Asegurar que archivos de código siempre se guarden como LF en el repo
+*.js text eol=lf
+*.ts text eol=lf
+*.json text eol=lf
+*.prisma text eol=lf
+*.css text eol=lfs
