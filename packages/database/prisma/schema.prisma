@@ -1,13 +1,103 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(100)
+  slug String @unique @db.VarChar(150)
+
+  // Relación recursiva (Auto-referencia) para subcategorías:
+  // Es opcional (Int?) porque una categoría raíz no tiene padre.
+  parentId Int? @map("parent_id")
+
+  // Campo de Relación (Objeto): Para acceder al padre (como @ManyToOne en JPA).
+  // Se requiere un nombre "CategoryToCategory" porque Prisma necesita saber qué campo conecta con cuál en la misma tabla.
+  parent Category? @relation("CategoryToCategory", fields: [parentId], references: [id])
+
+  // Campo de Relación (Lista): Para acceder a las subcategorías (como @OneToMany con mappedBy en JPA).
+  subCategories Category[] @relation("CategoryToCategory")
+
+  // --- RELACIÓN CON PRODUCTOS ---
+  // Lado "Uno" de la relación One-to-Many con Product. No lleva @relation porque el FK está en la tabla Product.
+  products Product[]
+
+  // Auditoría
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("categories")
+}
+
+model Product {
+  id          Int           @id @default(autoincrement())
+  name        String        @db.VarChar(255)
+  description String        @db.Text
+  slug        String        @unique @db.VarChar(255)
+  status      ProductStatus @default(ACTIVE)
+  isNew       Boolean       @default(false) @map("is_new")
+  isOnSale    Boolean       @default(false) @map("is_on_sale")
+
+  // FK y Relación
+  categoryId Int      @map("category_id")
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  // --- RELACIÓN CON VARIANTES E IMÁGENES ---
+  // Lado "Uno": Un producto tiene una lista de variantes e imágenes. 
+  variants ProductVariant[]
+  images   ProductImage[]
+
+  // Auditoría
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([isNew])
+  @@index([isOnSale])
+  @@map("products")
+}
+
+model ProductVariant {
+  id    Int     @id @default(autoincrement())
+  sku   String  @unique @db.VarChar(100)
+  price Decimal @db.Decimal(10, 2)
+  stock Int     @default(0)
+  color String  @db.VarChar(50)
+  size  String  @db.VarChar(20)
+
+  // FK y Relación
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  // Auditoría
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([color])
+  @@map("product_variants")
+}
+
+model ProductImage {
+  id           Int     @id @default(autoincrement())
+  url          String  @db.Text
+  altText      String? @map("alt_text") @db.VarChar(255)
+  variantColor String? @map("variant_color") @db.VarChar(50)
+  isMain       Boolean @default(false) @map("is_main")
+
+  // FK y Relación
+  productId Int     @map("product_id")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([variantColor])
+  @@map("product_images")
 }
