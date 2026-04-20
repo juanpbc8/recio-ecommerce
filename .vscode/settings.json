@@ -16,5 +16,6 @@
     "**/dist": true,
     "**/build": true,
     "**/.turbo": true
-  }
+  },
+  "prisma.pinToPrisma6": true
 }
