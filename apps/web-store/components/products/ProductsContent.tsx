@@ -21,7 +21,7 @@ export function ProductsContent() {
   return (
     <>
       {/* ENCABEZADO DE CATEGORÍA */}
-      <header className="w-full border-b border-border py-12">
+      <header className="w-full border-b border-border bg-secondary py-12">
         <div className="max-w-(--width-container-max) mx-auto px-(--spacing-content)">
           <h1 className="font-display text-4xl font-bold uppercase tracking-tighter">
             Colección Completa

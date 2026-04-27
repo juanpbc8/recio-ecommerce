@@ -87,7 +87,7 @@ export function HomeContent() {
             <h2 className="font-display text-2xl text-foreground sm:text-3xl">Nuevos Ingresos</h2>
             <Link
               className="font-sans text-sm text-neutral-600 transition-(--transition-recio) hover:text-foreground"
-              href="/catalogo"
+              href="/productos"
             >
               Ver todo
             </Link>
@@ -117,7 +117,7 @@ export function HomeContent() {
             </h2>
             <Link
               className="font-sans text-sm text-neutral-600 transition-(--transition-recio) hover:text-foreground"
-              href="/catalogo"
+              href="/productos"
             >
               Ver todo
             </Link>

@@ -27,7 +27,7 @@ export function Footer() {
             <ul className="flex flex-col gap-4">
               <li>
                 <Link
-                  href="/catalogo"
+                  href="/productos"
                   className="font-sans text-xs uppercase tracking-widest text-neutral-500 hover:text-foreground transition-colors"
                 >
                   Ver Todo
