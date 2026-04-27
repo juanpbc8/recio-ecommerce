@@ -1,5 +1,11 @@
-function HomePage() {
-  return <div>HomePage</div>;
-}
+import type { Metadata } from 'next';
+import { HomeContent } from '@/components/home/HomeContent';
 
-export default HomePage;
+export const metadata: Metadata = {
+  title: 'Home | Recio',
+  description: 'Esenciales masculinos de lujo con precisión minimalista.',
+};
+
+export default function Page() {
+  return <HomeContent />;
+}
