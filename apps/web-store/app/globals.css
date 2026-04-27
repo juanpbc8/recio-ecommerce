@@ -1,26 +1,53 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* --- PALETA DE MARCA --- */
+  --color-background: #ffffff;
+  --color-foreground: #09090b;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-primary: #000000;
+  --color-primary-foreground: #ffffff;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  --color-secondary: #f4f4f5;
+  --color-secondary-foreground: #18181b;
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* --- COLORES NEUTROS (Para bordes, sombras y capas) --- */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-600: #52525b;
+  --color-neutral-900: #18181b;
+
+  --color-border: var(--color-neutral-200);
+  --color-border-strong: var(--color-neutral-900);
+
+  /* --- COLORES FUNCIONALES (Feedback de usuario) --- */
+  /* Usamos tonos desaturados para no romper el minimalismo */
+  --color-success: #10b981; /* Esmeralda: Elegante pero claro */
+  --color-warning: #f59e0b; /* Ámbar: Atención sin alarma */
+  --color-error: #ef4444; /* Rojo: Error crítico */
+
+  /* --- TIPOGRAFÍA  --- */
+  --font-sans: 'Geist', 'Inter', sans-serif;
+  --font-display: 'Geist Mono', monospace; /* Para códigos, precios o títulos "tech" */
+
+  /* --- LAYOUT (La estructura) --- */
+  --radius-sm: 0px; /* Look Recio: Bordes totalmente rectos */
+  --radius-md: 2px; /* Sutil para botones */
+  --radius-lg: 4px; /* Máximo para Cards */
+
+  --spacing-container: 2rem;
+  --spacing-section: 5rem; /* IA usará py-section */
+  --spacing-content: 1.5rem; /* IA usará px-content */
+
+  --width-container-max: 80rem; /* max-w-container (1280px) */
+
+  /* --- TOKENS DE ESTADO --- */
+  --opacity-hover: 0.9;
+  --transition-recio: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* --- PRODUCT TOKENS (Para evitar deformaciones en fotos) --- */
+  --aspect-video: 16 / 9;
+  --aspect-portrait: 3 / 4;
 }
