@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
 
   // 2. IMPORTANTE: GitHub Pages suele usar rutas como /nombre-del-repo/
   // Si tu repo se llama "recio-ecommerce", descomenta la siguiente línea:
-  // basePath: '/recio-ecommerce',
+  basePath: '/recio-ecommerce',
 
   // 3. Ya lo tenemos, pero por seguridad:
   images: {

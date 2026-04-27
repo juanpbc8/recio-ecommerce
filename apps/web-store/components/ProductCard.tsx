@@ -15,7 +15,7 @@ function formatCurrency(value: number): string {
 }
 
 export function ProductCard({ product, priority = false }: ProductCardProps) {
-  const mainImage = product.images.find((image) => image.isMain);
+  const mainImage = product.images.find((image: { isMain: boolean }) => image.isMain);
   const fallbackImage = product.images[0];
   const imageSrc = mainImage?.url ?? fallbackImage?.url;
 
