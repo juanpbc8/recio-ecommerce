@@ -1,4 +1,23 @@
-import "./globals.css";
+import './globals.css';
+import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Recio | Esenciales de Lujo Minimalista',
+    template: '%s | Recio',
+  },
+  description:
+    'Colección curada de básicos masculinos de alta gama. Precisión, calidad y diseño minimalista.',
+  keywords: ['moda masculina', 'lujo', 'minimalismo', 'ropa de hombre', 'recio'],
+  authors: [{ name: 'Recio Team' }],
+  creator: 'Recio Ecommerce',
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function RootLayout({
   children,
@@ -7,7 +26,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-screen flex flex-col bg-background text-foreground">
+        <Navbar />
+        <main className="pt-20 flex-1">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
