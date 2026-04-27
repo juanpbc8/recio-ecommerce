@@ -23,10 +23,15 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        # 'npm ci' es más rápido y seguro en CI que 'npm install'
+        run: npm ci
+
+      - name: Generate Database Types
+        # Genera los tipos de Prisma para todo el monorepo
+        run: npm run db:gen
 
       - name: Build Web Store
-        # Usamos el filtro de Turbo para compilar SOLO el storefront
+        # Buildeamos solo la web para ahorrar tiempo, pero ya con los tipos de la DB generados arriba.
         run: npx turbo build --filter=web-store
 
       - name: Setup Pages
@@ -35,7 +40,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # La carpeta de salida de Next.js en un monorepo
           path: './apps/web-store/out'
 
       - name: Deploy to GitHub Pages
