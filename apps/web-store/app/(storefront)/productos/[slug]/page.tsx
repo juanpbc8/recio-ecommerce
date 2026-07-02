@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getStorefrontProductDetailBySlug } from '@/actions/catalog';
+import { ProductAddToCart } from '@/components/storefront/ProductAddToCart';
 
 interface ProductDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -61,9 +62,6 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     product.isOnSale && product.originalPrice && product.originalPrice > product.price
       ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
       : null;
-
-  const uniqueColors = [...new Set(product.variants.map((v) => v.color))];
-  const uniqueSizes = [...new Set(product.variants.map((v) => v.size))];
 
   return (
     <div className="min-h-screen bg-background">
@@ -156,65 +154,8 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               </p>
             )}
 
-            <div className="mt-10 border-t border-border pt-8 space-y-8">
-              {/* Color Selector */}
-              {uniqueColors.length > 0 && (
-                <div>
-                  <label className="block font-display text-[10px] font-bold uppercase tracking-[0.2em] mb-3">
-                    Color
-                  </label>
-                  <div className="flex gap-3">
-                    {uniqueColors.map((color) => (
-                      <button
-                        key={color}
-                        className="border border-border px-4 py-2 font-sans text-[11px] uppercase tracking-wider hover:border-border-strong transition-colors"
-                      >
-                        {color}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Size Selector */}
-              {uniqueSizes.length > 0 && (
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <label className="font-display text-[10px] font-bold uppercase tracking-[0.2em]">
-                      Talla
-                    </label>
-                    <button className="font-sans text-[10px] uppercase tracking-widest text-neutral-500 underline underline-offset-4 hover:text-foreground transition-colors">
-                      Guía de tallas
-                    </button>
-                  </div>
-                  <div className="grid grid-cols-5 gap-2">
-                    {uniqueSizes.map((size) => {
-                      const hasStock = product.variants.some(
-                        (v) => v.size === size && v.stock > 0,
-                      );
-                      return (
-                        <button
-                          key={size}
-                          disabled={!hasStock}
-                          className={`border py-3 font-sans text-[11px] uppercase tracking-wider transition-colors ${
-                            hasStock
-                              ? 'border-border hover:border-border-strong'
-                              : 'border-border/50 text-neutral-400 cursor-not-allowed line-through'
-                          }`}
-                        >
-                          {size}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Add to Cart Button */}
-            <button className="mt-10 w-full bg-foreground text-background font-sans text-[11px] uppercase tracking-[0.2em] py-4 border border-border-strong hover:opacity-[var(--opacity-hover)] active:opacity-90 transition-opacity">
-              Añadir al carrito
-            </button>
+            {/* Interactive: Color/Size Selection + Add to Cart */}
+            <ProductAddToCart product={product} />
 
             {/* Metadata */}
             <div className="mt-8 border-t border-border pt-6 space-y-3">
