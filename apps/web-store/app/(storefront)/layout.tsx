@@ -1,6 +1,7 @@
 import '@/app/globals.css';
 import { Navbar } from '@/components/storefront/Navbar';
 import { Footer } from '@/components/storefront/Footer';
+import { CartProvider } from '@/context/CartContext';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -27,9 +28,11 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className="min-h-screen flex flex-col bg-background text-foreground">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <CartProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );
