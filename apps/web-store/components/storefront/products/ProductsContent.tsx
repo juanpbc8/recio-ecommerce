@@ -1,58 +1,31 @@
-// apps/web-store/components/storefront/products/ProductsContent.tsx
-'use client';
-
-import { useState, useEffect } from 'react';
 import { ProductCard } from '@/components/storefront/ProductCard';
-import { useProducts } from '@/hooks/use-products';
+import { Pagination } from '@/components/storefront/Pagination';
 import { SlidersHorizontal, ChevronDown } from 'lucide-react';
-import { ProductCardDto } from '@/types'; // Importamos tu nuevo contrato oficial
+import type { ProductCardDto, PaginationMeta } from '@/types';
 
-export function ProductsContent() {
-  // El estado ahora está blindado usando únicamente el DTO oficial del catálogo
-  const [products, setProducts] = useState<ProductCardDto[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { getProducts } = useProducts();
+interface ProductsContentProps {
+  products: ProductCardDto[];
+  meta: PaginationMeta | null;
+  error: string | null;
+  currentPage: number;
+}
 
-  useEffect(() => {
-    getProducts().then((data) => {
-      // Adaptador: Transformamos los datos del mock viejo al nuevo DTO plano
-      const adaptedProducts: ProductCardDto[] = (data as any[]).map((p) => {
-        const mainImage = p.images?.find((img: any) => img.url);
-        const fallbackImage = p.images?.[0];
-
-        return {
-          id: p.id,
-          name: p.name,
-          slug: p.slug,
-          price: Number(p.price),
-          originalPrice: p.originalPrice ? Number(p.originalPrice) : null,
-          imageUrl: mainImage?.url ?? fallbackImage?.url ?? p.imageUrl ?? null,
-          isNew: !!p.isNew,
-          isOnSale: !!p.isOnSale,
-          categoryName: p.category?.name ?? 'Ropa',
-        };
-      });
-
-      setProducts(adaptedProducts);
-      setIsLoading(false);
-    });
-  }, [getProducts]);
-
+export function ProductsContent({ products, meta, error, currentPage }: ProductsContentProps) {
   return (
     <>
-      {/* ENCABEZADO DE CATEGORÍA */}
+      {/* CATEGORY HEADER */}
       <header className="w-full border-b border-border bg-secondary py-12">
         <div className="max-w-(--width-container-max) mx-auto px-(--spacing-content)">
           <h1 className="font-display text-4xl font-bold uppercase tracking-tighter">
             Colección Completa
           </h1>
           <p className="mt-2 font-sans text-xs text-neutral-500 uppercase tracking-widest">
-            {products.length} Piezas encontradas
+            {meta ? `${meta.totalItems} piezas encontradas` : 'Cargando...'}
           </p>
         </div>
       </header>
 
-      {/* BARRA DE FILTROS RÁPIDOS */}
+      {/* FILTER BAR */}
       <div className="w-full border-b border-border bg-white sticky top-16 z-40">
         <div className="max-w-(--width-container-max) mx-auto px-(--spacing-content) h-14 flex items-center justify-between">
           <button className="flex items-center gap-2 font-sans text-[10px] uppercase tracking-[0.2em] hover:opacity-50 transition-opacity">
@@ -119,19 +92,40 @@ export function ProductsContent() {
             </div>
           </aside>
 
-          {/* GRID DE PRODUCTOS */}
+          {/* PRODUCT GRID + PAGINATION */}
           <section className="flex-1">
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-12">
-              {isLoading
-                ? Array(6)
-                    .fill(0)
-                    .map((_, i) => (
-                      <div key={i} className="aspect-portrait bg-neutral-100 animate-pulse" />
-                    ))
-                : products.map((product, index) => (
+            {error && (
+              <div className="border border-error bg-error/10 text-error p-4 font-sans text-sm mb-8">
+                {error}
+              </div>
+            )}
+
+            {!error && products.length === 0 && (
+              <div className="flex flex-col items-center justify-center py-24 text-center">
+                <p className="font-display text-lg text-neutral-400 uppercase tracking-wider">
+                  No se encontraron productos
+                </p>
+                <p className="mt-2 font-sans text-xs text-neutral-400">
+                  Intenta con otros filtros o vuelve más tarde.
+                </p>
+              </div>
+            )}
+
+            {products.length > 0 && (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-12">
+                  {products.map((product, index) => (
                     <ProductCard key={product.id} product={product} priority={index < 3} />
                   ))}
-            </div>
+                </div>
+
+                {meta && meta.totalPages > 1 && (
+                  <div className="mt-16">
+                    <Pagination meta={meta} />
+                  </div>
+                )}
+              </>
+            )}
           </section>
         </div>
       </div>
