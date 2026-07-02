@@ -19,5 +19,8 @@
   },
   "devDependencies": {
     "turbo": "latest"
+  },
+  "dependencies": {
+    "lightningcss-linux-x64-gnu": "^1.32.0"
   }
 }
