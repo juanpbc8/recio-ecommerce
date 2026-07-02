@@ -1,4 +1,4 @@
-import type { Product, ProductImage, ProductVariant } from '@repo/database';
+import type { Product, ProductImage, ProductVariant } from '@prisma/client';
 
 export type ProductWithRelations = Product & {
   variants: ProductVariant[];
