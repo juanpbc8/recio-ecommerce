@@ -1,31 +1,33 @@
-# --- Etapa de Compilación (Build) ---
-FROM node:18-alpine AS builder
+# Etapa de compilacion
+FROM node:20-alpine AS builder
+
 WORKDIR /app
 
 # Copiar archivos de dependencias
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
-# Copiar el resto del código del backend
+# Copiar codigo fuente y configuracion
 COPY . .
 
-# Compilar la aplicación de NestJS a código de producción (dist/)
+# Compilar la aplicacion NestJS
 RUN npm run build
 
-# --- Etapa de Producción (Runner) ---
-FROM node:18-alpine AS runner
+# Etapa de produccion
+FROM node:20-alpine AS runner
+
 WORKDIR /app
 ENV NODE_ENV=production
 
-# Copiar solo lo necesario para ahorrar espacio (Contenedor ligero)
+# Copiar dependencias de produccion
 COPY package*.json ./
-RUN npm install --only=production
+RUN npm ci --only=production
 
-# Copiar la compilación desde el builder
+# Copiar compilacion desde la etapa anterior
 COPY --from=builder /app/dist ./dist
 
-# Exponer el puerto por donde escucha NestJS (por defecto 3000 o 4000)
+# Exponer puerto
 EXPOSE 4000
 
-# Comando para arrancar el backend en el contenedor
+# Comando de inicio
 CMD ["node", "dist/main"]
