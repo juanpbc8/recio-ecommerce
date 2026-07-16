@@ -1,28 +1,13 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
-    "db:gen": {
-      "inputs": ["prisma/schema.prisma"],
-      "outputs": ["generated/**"],
-      "cache": true
-    },
     "build": {
-      "dependsOn": ["^build", "^db:gen"],
+      "dependsOn": ["^build"],
       "outputs": [".next/**", "dist/**"]
     },
     "dev": {
-      "dependsOn": ["^db:gen"],
       "cache": false,
       "persistent": true
-    },
-    "db:migrate": {
-      "cache": false
-    },
-    "db:push": {
-      "cache": false
-    },
-    "db:studio": {
-      "cache": false
     }
   }
 }
