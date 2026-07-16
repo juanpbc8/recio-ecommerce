@@ -10,9 +10,9 @@ export class OrdersService {
       userId: 'user-2',
       userName: 'Cliente Demo',
       items: [
-        { productId: 'prod-1', productName: 'Laptop Gamer Pro', quantity: 1, price: 1299.99 },
+        { productId: 'prod-1', productName: 'Traje Clasico Azul Marino', quantity: 1, price: 459.99 },
       ],
-      total: 1299.99,
+      total: 459.99,
       status: 'paid',
       createdAt: new Date().toISOString(),
     },
@@ -21,10 +21,10 @@ export class OrdersService {
       userId: 'user-3',
       userName: 'Maria Lopez',
       items: [
-        { productId: 'prod-2', productName: 'Mouse Inalambrico', quantity: 2, price: 49.99 },
-        { productId: 'prod-5', productName: 'Auriculares Bluetooth', quantity: 1, price: 149.99 },
+        { productId: 'prod-3', productName: 'Camisa Blanca de Vestir', quantity: 2, price: 59.99 },
+        { productId: 'prod-8', productName: 'Zapatos Oxford Negros', quantity: 1, price: 149.99 },
       ],
-      total: 249.97,
+      total: 269.97,
       status: 'pending',
       createdAt: new Date().toISOString(),
     },
@@ -33,9 +33,10 @@ export class OrdersService {
       userId: 'user-2',
       userName: 'Cliente Demo',
       items: [
-        { productId: 'prod-3', productName: 'Teclado Mecanico', quantity: 1, price: 89.99 },
+        { productId: 'prod-4', productName: 'Camisa Azul de Vestir', quantity: 1, price: 54.99 },
+        { productId: 'prod-7', productName: 'Corbata de Seda Roja', quantity: 1, price: 34.99 },
       ],
-      total: 89.99,
+      total: 89.98,
       status: 'delivered',
       createdAt: new Date().toISOString(),
     },
@@ -44,9 +45,10 @@ export class OrdersService {
       userId: 'user-4',
       userName: 'Carlos Ruiz',
       items: [
-        { productId: 'prod-4', productName: 'Monitor 27 pulgadas', quantity: 1, price: 499.99 },
+        { productId: 'prod-2', productName: 'Traje Gris Slim Fit', quantity: 1, price: 499.99 },
+        { productId: 'prod-9', productName: 'Cinturon de Cuero Marron', quantity: 1, price: 44.99 },
       ],
-      total: 499.99,
+      total: 544.98,
       status: 'shipped',
       createdAt: new Date().toISOString(),
     },
@@ -60,12 +62,16 @@ export class OrdersService {
   };
 
   private productNames: Record<string, string> = {
-    'prod-1': 'Laptop Gamer Pro',
-    'prod-2': 'Mouse Inalambrico',
-    'prod-3': 'Teclado Mecanico',
-    'prod-4': 'Monitor 27 pulgadas',
-    'prod-5': 'Auriculares Bluetooth',
-    'prod-6': 'Webcam HD',
+    'prod-1': 'Traje Clasico Azul Marino',
+    'prod-2': 'Traje Gris Slim Fit',
+    'prod-3': 'Camisa Blanca de Vestir',
+    'prod-4': 'Camisa Azul de Vestir',
+    'prod-5': 'Pantalon Chino Beige',
+    'prod-6': 'Pantalon de Vestir Negro',
+    'prod-7': 'Corbata de Seda Roja',
+    'prod-8': 'Zapatos Oxford Negros',
+    'prod-9': 'Cinturon de Cuero Marron',
+    'prod-10': 'Blazer Elegante Azul',
   };
 
   private calculateTotal(items: OrderItem[]): number {
