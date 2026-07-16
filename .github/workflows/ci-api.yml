@@ -29,7 +29,7 @@ jobs:
       - name: Build imagen Docker del API
         uses: docker/build-push-action@v5
         with:
-          context: ./apps/api
+          context: .
           file: ./apps/api/Dockerfile
           push: false
           tags: recio-api:latest
