@@ -23,18 +23,8 @@ jobs:
       - name: Clonar repositorio
         uses: actions/checkout@v4
 
-      - name: Configurar Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Build imagen Docker del API
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./apps/api/Dockerfile
-          push: false
-          tags: recio-api:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+        run: docker build -t recio-api:latest -f ./apps/api/Dockerfile .
 
       - name: Verificar que la imagen se construyo
         run: docker image ls recio-api:latest
